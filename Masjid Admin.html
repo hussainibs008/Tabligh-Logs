@@ -5,16 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tabligh Logs - Masjid</title>
     <style>
-        html, body {
-         height: 100%;
-        }
+
         html {
             display: table;
             margin: auto;
         }
         body{
             max-width: 500px;
-            height: 95vh;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -55,44 +52,7 @@
             padding: 5px;
             margin: 10px;
             min-width: max-content;
-        }
-
-        #filter-dashboard-container{
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-        }
-        #filtersContainer{
-            display: flex;
-            gap: 10px;
-            justify-content: space-evenly;
-        }
-        .filter-field,#openMonthlyFormBtn{
-            padding: 5px;
-            border-radius: 4px;
-        }
-        .textbox-n{
-        max-width: 75px;
-        flex-shrink: 1;
-        }
-        #dashboardContainer{
-        flex-grow: 1;
-        background-color: #d2d2fa;
-        margin: 5px;
-        align-content: center;
-        text-align: center;
-        border-radius: 5px;
-        width: 100%;
-        }
-        #searchByMasjid{
-            flex-grow: 1;
-            flex-shrink: 1;
-            width: 50%;
-        }
-        #divforBtnOpenMonthlyForm{
-            display: flex;
-            justify-content: flex-end;
-        }
+        }        
     </style>
 </head>
 <body>
@@ -119,33 +79,9 @@
                 </div>
             </div>
         </div>
-        <h3>Monthly Report</h3>
-        <div id="filter-dashboard-container">
-            <div id="filtersContainer">  
-                <input id="searchByMasjid" type="text" class="filter-field" placeholder="Search by Masjid Name">      
-                <input
-                    placeholder="From Date"
-                    class="textbox-n filter-field"
-                    type="text"
-                    onfocus="(this.type='date')"
-                    onblur="(this.type='text')"
-                    id="fromDate" 
-                />
-                <input
-                    placeholder="To Date"
-                    class="textbox-n filter-field"
-                    type="text"
-                    onfocus="(this.type='date')"
-                    onblur="(this.type='text')"
-                    id="toDate"             
-                />
-            </div>
-            <div id="dashboardContainer">The Monthly Dashboard data will show up here.</div>
-            <div id="divforBtnOpenMonthlyForm">
-                <button id="openMonthlyFormBtn" type="button" onclick="openMonthlyForm()">New Monthly Entry</button>
-            </div>
-        </div>
+        <h3 id="monthlyReportHeading4Masjid">Monthly Report</h3>        
     </div>
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="script.js"></script>
 </body>
