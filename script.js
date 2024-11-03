@@ -43,7 +43,7 @@ function setHeaderFunctions(){
         });
         //logout
         logoutBtn.addEventListener("click",function(){
-            location.replace("./Login.html");        
+            location.replace("./index.html");        
         })
         // hide Logout button if clicking elsewhere than loogout
         $(document).click(function(event){ 
