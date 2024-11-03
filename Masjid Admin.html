@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabligh Logs - Masjid</title>
+    <style>
+        html, body {
+         height: 100%;
+        }
+        html {
+            display: table;
+            margin: auto;
+        }
+        body{
+            max-width: 500px;
+            height: 95vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        #masjidHome{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100%;
+        }
+        h2,h3,h4{
+            margin: 5px;    
+            text-align: center;        
+        }
+        ul{
+            padding-left: 10px;
+            margin-top: 5px;
+            margin-bottom: 5px;
+        }
+        #tarteebCard{
+            background-color: #f0808080;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            max-width: max-content;
+        }
+        #twoTarteebContainer{
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+        .tarteebContainer{
+            background-color: #fc585860;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 5px;
+            margin: 10px;
+            min-width: max-content;
+        }
+
+        #filter-dashboard-container{
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        #filtersContainer{
+            display: flex;
+            gap: 10px;
+            justify-content: space-evenly;
+        }
+        .filter-field,#openMonthlyFormBtn{
+            padding: 5px;
+            border-radius: 4px;
+        }
+        .textbox-n{
+        max-width: 75px;
+        flex-shrink: 1;
+        }
+        #dashboardContainer{
+        flex-grow: 1;
+        background-color: #d2d2fa;
+        margin: 5px;
+        align-content: center;
+        text-align: center;
+        border-radius: 5px;
+        width: 100%;
+        }
+        #searchByMasjid{
+            flex-grow: 1;
+            flex-shrink: 1;
+            width: 50%;
+        }
+        #divforBtnOpenMonthlyForm{
+            display: flex;
+            justify-content: flex-end;
+        }
+    </style>
+</head>
+<body>
+    <iframe id="headerFrame" src="Header.html" width="100%" height="70px" frameborder="0" scrolling="no"></iframe>
+    <div id="masjidHome">
+        <div id="tarteebCard">
+            <h3>Latest Weekly Jamāt Tarteeb</h3>
+            <div>Date:<span>8 Jan 2024</span></div>
+            <div id="twoTarteebContainer">
+                <div id="1dayTarteebContainer" class="tarteebContainer">
+                    <h4>1-day Jamāt</h4>
+                    <ul>
+                        <li>Masjid ABC</li>
+                        <li>Masjid XYZ</li>
+                        <li>Masjid MNO</li>
+                    </ul>
+                </div>
+                <div id="3dayTarteebContainer" class="tarteebContainer">
+                    <h4>3-days Jamāt</h4>
+                    <ul>
+                        <li>Masjid KLM</li>
+                        <li>Masjid XYZ</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <h3>Monthly Report</h3>
+        <div id="filter-dashboard-container">
+            <div id="filtersContainer">  
+                <input id="searchByMasjid" type="text" class="filter-field" placeholder="Search by Masjid Name">      
+                <input
+                    placeholder="From Date"
+                    class="textbox-n filter-field"
+                    type="text"
+                    onfocus="(this.type='date')"
+                    onblur="(this.type='text')"
+                    id="fromDate" 
+                />
+                <input
+                    placeholder="To Date"
+                    class="textbox-n filter-field"
+                    type="text"
+                    onfocus="(this.type='date')"
+                    onblur="(this.type='text')"
+                    id="toDate"             
+                />
+            </div>
+            <div id="dashboardContainer">The Monthly Dashboard data will show up here.</div>
+            <div id="divforBtnOpenMonthlyForm">
+                <button id="openMonthlyFormBtn" type="button" onclick="openMonthlyForm()">New Monthly Entry</button>
+            </div>
+        </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
