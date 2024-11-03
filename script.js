@@ -92,7 +92,7 @@ function makeUserVisible(user_type){
 
         // make it visible
         svgAndUser.classList.remove("hideVisibility");
-    }
+    });
 
 }
 
