@@ -30,14 +30,26 @@ async function loadOtherHTML(htmlName) {
     }
 }
   
-function setHeaderFunctions(){
-    const startTime = performance.now();
-
+function setHeaderFunctions(user_type){
     const iframe = document.querySelector("#headerFrame");
-    iframe.addEventListener("load", () => {        
+    iframe.src = "Header.html?v=" + new Date().getTime(); // browdser-cache-busting query string
+
+    // console.log(iframe.readyState);
+
+    iframe.onload = () => {
+    // iframe.addEventListener("load", () => {
+        // console.log(iframe.readyState);
+        console.log('entered the after-load event litsner for iFrame');
+        
         const iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
         const svgAndUser = iframeDocument.getElementById("svgAndUserContainer");
         const logoutBtn = iframeDocument.getElementById("logout");
+
+        //set usertype as Masjid or Markaz
+        iframeDocument.getElementById("masjidOrMarkaz").innerHTML = user_type;
+
+        // make it visible
+        svgAndUser.classList.remove("hideVisibility");
         
         //make logout button visible on user click
         svgAndUser.addEventListener("click",function(){
@@ -54,47 +66,42 @@ function setHeaderFunctions(){
             }
         });
 
-        var duration = performance.now() - startTime;
-        console.log(`half the setHeaderFunctions took ${duration}ms`);
-
         //hyperlink to home in title
         var pathNam = "";
         pathNam = window.location.pathname;        
-        // console.log(pathNam);
         if (pathNam.includes("Markaz")) {
             iframeDocument.getElementById("appName").addEventListener("click",function(){
                 location.replace("./Markaz Admin.html");         
             })
         } else if(pathNam.includes("Masjid")){
+                        console.log('enetered if masjid cond to hyperlink appname');
+
             iframeDocument.getElementById("appName").addEventListener("click",function(){
                 location.replace("./Masjid Admin.html");  
             })
         }
-        duration = performance.now() - startTime;
-        console.log(`setHeaderFunctions took ${duration}ms`);
-    });
+    };
 
 
 }
 
-function makeUserVisible(user_type){
-    const iframe = document.querySelector("#headerFrame");
-    console.log('yet to enter makeUserVisible()');
-    iframe.addEventListener("load", () => { 
+// function makeUserVisible(user_type){
+//     const iframe = document.querySelector("#headerFrame");
+//     console.log('yet to enter makeUserVisible()');
+//     iframe.addEventListener("load", () => { 
 
-    // iframe.onload = () => {
-        const iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
-        const svgAndUser = iframeDocument.getElementById("svgAndUserContainer");
-        console.log('entering makeUserVisible()');
+//     // iframe.onload = () => {
+//         const iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
+//         const svgAndUser = iframeDocument.getElementById("svgAndUserContainer");
+//         console.log('entering makeUserVisible()');
      
-        //set usertype as Masjid or Markaz
-        iframeDocument.getElementById("masjidOrMarkaz").innerHTML = user_type;
+//         //set usertype as Masjid or Markaz
+//         iframeDocument.getElementById("masjidOrMarkaz").innerHTML = user_type;
 
-        // make it visible
-        svgAndUser.classList.remove("hideVisibility");
-    });
-
-}
+//         // make it visible
+//         svgAndUser.classList.remove("hideVisibility");
+//     });
+// }
 
 function dateFormatChange(dateInput){
     // Create a Date object from the input value
@@ -134,12 +141,10 @@ function login(userType){
 }
 
 function setPageAsPerUsertype(){
-    const startTime = performance.now();
-
     var masjidMarkaz ="";
     masjidMarkaz=window.location.pathname;
     if (masjidMarkaz.includes("Masjid") || masjidMarkaz.includes("Markaz")){
-        setHeaderFunctions();
+        // setHeaderFunctions();
         loadOtherHTML("Monthly Report.html")
         .then(()=>{
             loadOtherHTML("Monthly Form.html")
@@ -166,7 +171,7 @@ function setPageAsPerUsertype(){
                 //Set up for Masjid
                 if (masjidMarkaz.includes("Masjid")) {
 
-                    makeUserVisible("Masjid");
+                    setHeaderFunctions("Masjid");
   
                     document.getElementById("openMonthlyFormBtn").addEventListener("click",function(){
                         hide(['tarteebCard','monthlyReportHeading4Masjid']);//add h3 after assinging id
@@ -187,7 +192,7 @@ function setPageAsPerUsertype(){
                 // Set up for Markaz 
                 else if(masjidMarkaz.includes("Markaz")){
 
-                    makeUserVisible("Markaz");
+                    setHeaderFunctions("Markaz");
 
                     hide(['filter-dashboard-container']);
     
@@ -249,9 +254,6 @@ function setPageAsPerUsertype(){
         });
         
     } 
-
-    const duration = performance.now() - startTime;
-    console.log(`setPageAsPerUsertype took ${duration}ms`);
 }
 
 function onWeeklyFormSubmit(){
