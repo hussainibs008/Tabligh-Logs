@@ -40,7 +40,7 @@ function setHeaderFunctions(user_type){
     // iframe.addEventListener("load", () => {
         // console.log(iframe.readyState);
         console.log('entered the after-load event litsner for iFrame');
-        
+
         const iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
         const svgAndUser = iframeDocument.getElementById("svgAndUserContainer");
         const logoutBtn = iframeDocument.getElementById("logout");
