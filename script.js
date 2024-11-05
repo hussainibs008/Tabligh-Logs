@@ -182,11 +182,24 @@ function setPageAsPerUsertype(){
                     show(['fullFormMonthly']);
                 });
     
-                //enable multiple languages in monthly Form
-                $('input[type="checkbox"]').click(function() { 
+
+
+                //Disable unselecting last checkbox
+                $('input[type="checkbox"]').click(function() {
                     var inputValue = $(this).attr("value"); 
-                    $("." + inputValue).toggle(); 
-                }); 
+                
+                    // Check the number of checkboxes that are checked
+                    var checkedCount = $('input[type="checkbox"]:checked').length;
+                
+                    // If no checkbox is checked, re-check this one and show an alert
+                    if (checkedCount === 0) {
+                        $(this).prop('checked', true);
+                        alert("At least one checkbox must remain checked.");
+                    } else{
+                        $("." + inputValue).toggle();
+                    }
+                });
+                
         
                 document.getElementById("closeMonthlyForm").addEventListener("click",function(){
                     hide(['fullFormMonthly']);
