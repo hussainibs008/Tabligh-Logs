@@ -1,6 +1,38 @@
 $(document).ready(function() { 
+
+    //setup favicorn
+    var link = document.querySelector("link[rel~='icon']");
+    if (!link) {
+        link = document.createElement('link');
+        link.rel = 'icon';
+        document.head.appendChild(link);
+    }
+    link.href = './assets/images/2303247_architect_dome_masjid_mosque_ramadhan_icon.svg';
+
     setPageAsPerUsertype();
 }); 
+
+//add Masjids in dropdown
+function addMasjidsInDD(){
+    
+    const masjidsArray = ["Masjid Ayub Ansari", "Masjid Jama Wadi Bahas", "Masjid Dewan", "Masjid Royal Guard", "Masjid Fory", "Masjid Tawba", "Masjid Omar bin Khattab", "Masjid Abbas (Mursalun)", "Masjid Sariza (Bazar)", "Masjid Talib Fresh", "Masjid Sarija - 2 (near sea)", "Masjid Gamama", "Masjid Gamama 2 (small)", "Masjid Muhammad bin Umar ", "Masjid Sulaiman", "Masjid Al Amri", "Masjid Magfirata", "Masjid Khalid bin Walid", "Masjid Muhammad bin Hamud", "Masjid Abdullah Farsi", "Masjid Khamis Farsi", "Masjid Abu Hurairah", "Masjid Halates Suburo", "Masjid Gasheba Jama", "Masjid Musa", "Masjid Kamilah", "Masjid Abdus Salam", "Masjid Galfar Camp", "Masjid Furqan", "Masjid Abdullah", "Masjid Noor", "Masjid Unique Camp", "Masjid Ali Yusuf", "Masjid Azhar"];
+
+    // Select all <select> elements with class "masjidDropdown"
+    const dropdowns = document.querySelectorAll("select.masjidDropdown");
+
+    // Loop through each <select> element
+    dropdowns.forEach(dropdown => {        
+        // Loop through the optionsArray and add each as an <option>
+        masjidsArray.forEach(optionText => {
+            const option = document.createElement("option");
+            option.value = optionText;
+            option.textContent = optionText;
+            dropdown.appendChild(option);
+        });
+    });
+}
+
+
 
 // Function to load content from another HTML Page 
 async function loadOtherHTML(htmlName) {
@@ -81,27 +113,7 @@ function setHeaderFunctions(user_type){
             })
         }
     };
-
-
 }
-
-// function makeUserVisible(user_type){
-//     const iframe = document.querySelector("#headerFrame");
-//     console.log('yet to enter makeUserVisible()');
-//     iframe.addEventListener("load", () => { 
-
-//     // iframe.onload = () => {
-//         const iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
-//         const svgAndUser = iframeDocument.getElementById("svgAndUserContainer");
-//         console.log('entering makeUserVisible()');
-     
-//         //set usertype as Masjid or Markaz
-//         iframeDocument.getElementById("masjidOrMarkaz").innerHTML = user_type;
-
-//         // make it visible
-//         svgAndUser.classList.remove("hideVisibility");
-//     });
-// }
 
 function dateFormatChange(dateInput){
     // Create a Date object from the input value
@@ -136,19 +148,32 @@ function login(userType){
     if (userType=="Markaz Admin") {
         location.replace("./Markaz Admin.html");        
     } else if(text.includes("Masjid")){
-        location.replace("./Masjid Admin.html");  
+        window.location.href = `Masjid Admin.html?variable=${encodeURIComponent(userType)}`;
+        // location.replace("./Masjid Admin.html");  
     }
+}
+
+// Function to get query parameters
+function getQueryParam(param) {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(param);
 }
 
 function setPageAsPerUsertype(){
     var masjidMarkaz ="";
     masjidMarkaz=window.location.pathname;
+    if(masjidMarkaz.includes("index")){
+        addMasjidsInDD();
+    }
     if (masjidMarkaz.includes("Masjid") || masjidMarkaz.includes("Markaz")){
         // setHeaderFunctions();
         loadOtherHTML("Monthly Report.html")
         .then(()=>{
             loadOtherHTML("Monthly Form.html")
-            .then(()=>{                
+            .then(()=>{     
+                           
+                addMasjidsInDD();
+
                 hide(['fullFormMonthly']);
     
                 document.getElementById("openMonthlyFormBtn").addEventListener("click",function(){
@@ -168,8 +193,25 @@ function setPageAsPerUsertype(){
                     show(['filter-dashboard-container']);
                 });
     
-                //Set up for Masjid
+                //Set up for Masjid--------------------
                 if (masjidMarkaz.includes("Masjid")) {
+
+                    // Retrieve the variable from the query parameters
+                    const LoggedMasjid = getQueryParam("variable");
+                    const selectElement = document.getElementById("masjidDD");
+                    if (LoggedMasjid) {
+                        // Get the select element
+
+                        // Check if the option exists
+                        for (let option of selectElement.options) {
+                            if (option.value === LoggedMasjid) {
+                                // If found, select the option
+                                option.selected = true; // Highlight or select the option
+                                break; // Exit the loop once found
+                            }
+                        }
+                    }
+                    selectElement.disabled = "true";//freeze masjid value 
 
                     setHeaderFunctions("Masjid");
   
@@ -182,12 +224,7 @@ function setPageAsPerUsertype(){
                     });
 
                     //hide search by Masjid bar
-                    document.getElementById('searchByMasjid').classList.add('displayOff');
-                    //edit this code to fetch logged in masjid name and select
-                    document.getElementById("masjidDD").selectedIndex = 1;
-                    //freeze masjid selection dropdown
-                    document.getElementById("masjidDD").disabled = true;
-    
+                    document.getElementById('searchByMasjid').classList.add('displayOff');    
                 } 
                 // Set up for Markaz 
                 else if(masjidMarkaz.includes("Markaz")){
