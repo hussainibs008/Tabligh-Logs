@@ -161,7 +161,7 @@ function getQueryParam(param) {
 
 function setPageAsPerUsertype(){
     var masjidMarkaz ="";
-    masjidMarkaz=window.location.pathname;
+    masjidMarkaz = window.location.pathname;
     if(masjidMarkaz.includes("index")){
         addMasjidsInDD();
     }
