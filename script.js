@@ -162,11 +162,6 @@ function getQueryParam(param) {
 function setPageAsPerUsertype(){
     var masjidMarkaz ="";
     masjidMarkaz = window.location.pathname;
-        console.log('before '+masjidMarkaz);
-    if(masjidMarkaz.includes("index")){
-            console.log('after '+masjidMarkaz);
-        addMasjidsInDD();
-    }
     if (masjidMarkaz.includes("Masjid") || masjidMarkaz.includes("Markaz")){
         // setHeaderFunctions();
         loadOtherHTML("Monthly Report.html")
@@ -305,7 +300,9 @@ function setPageAsPerUsertype(){
             });           
         });
         
-    } 
+    } else{ //for login page
+        addMasjidsInDD();
+    }
 }
 
 function onWeeklyFormSubmit(){
