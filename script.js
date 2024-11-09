@@ -162,7 +162,9 @@ function getQueryParam(param) {
 function setPageAsPerUsertype(){
     var masjidMarkaz ="";
     masjidMarkaz = window.location.pathname;
+        console.log('before '+masjidMarkaz);
     if(masjidMarkaz.includes("index")){
+            console.log('before '+masjidMarkaz);
         addMasjidsInDD();
     }
     if (masjidMarkaz.includes("Masjid") || masjidMarkaz.includes("Markaz")){
